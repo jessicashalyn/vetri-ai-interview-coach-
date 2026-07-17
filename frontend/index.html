@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vetri AI - Smart Interview Coach</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-brain"></i>
+                <span>Vetri AI</span>
+                <span class="badge">Interview Coach</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active" data-page="home"><i class="fas fa-home"></i> Home</a>
+                <a href="#" data-page="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+                <a href="#" data-page="profile"><i class="fas fa-user"></i> Profile</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Home Page -->
+            <div id="homePage" class="page-content">
+                <!-- Hero Section -->
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1>Master Your Interview with <span class="gradient-text">AI Power</span></h1>
+                        <p>Practice with personalized questions, get instant feedback, and boost your confidence</p>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <i class="fas fa-robot"></i>
+                            <span>AI-Powered</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-bolt"></i>
+                            <span>Instant Feedback</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-star"></i>
+                            <span>Smart Reports</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Form -->
+                <div id="inputForm" class="form-container glass-card">
+                    <div class="form-header">
+                        <i class="fas fa-user-plus"></i>
+                        <h2>Start Your Interview Prep</h2>
+                        <p>Fill in your details to get personalized questions</p>
+                    </div>
+                    <form id="interviewForm" class="modern-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Full Name</label>
+                                <input type="text" id="fullName" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-briefcase"></i> Job Role</label>
+                                <input type="text" id="jobRole" required placeholder="e.g., Software Engineer">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-level-up-alt"></i> Experience Level</label>
+                                <select id="experienceLevel" required>
+                                    <option value="">Select experience</option>
+                                    <option value="Fresher">🌱 Fresher</option>
+                                    <option value="Experienced">🚀 Experienced</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-tools"></i> Skills</label>
+                                <input type="text" id="skills" required placeholder="Python, JavaScript, SQL">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-comments"></i> Interview Type</label>
+                                <select id="interviewType" required>
+                                    <option value="">Select type</option>
+                                    <option value="HR">💼 HR</option>
+                                    <option value="Technical">💻 Technical</option>
+                                    <option value="Mixed">🔄 Mixed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-signal"></i> Difficulty Level</label>
+                                <select id="difficultyLevel" required>
+                                    <option value="">Select difficulty</option>
+                                    <option value="Easy">🟢 Easy</option>
+                                    <option value="Medium">🟡 Medium</option>
+                                    <option value="Hard">🔴 Hard</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-list-ol"></i> Number of Questions</label>
+                            <input type="number" id="numberOfQuestions" required min="3" max="10" value="5">
+                        </div>
+
+                        <button type="submit" class="btn-primary pulse">
+                            <i class="fas fa-rocket"></i> Start Interview
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Interview Section -->
+                <div id="interviewSection" class="interview-container glass-card" style="display: none;">
+                    <div class="interview-header">
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span><i class="fas fa-question-circle"></i> Progress</span>
+                                <span id="questionCounter">1 of 5</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="progressBar" class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Question <span id="currentQuestionNum">1</span></span>
+                        </div>
+                        <h3 id="currentQuestion">Your personalized question will appear here</h3>
+                        <div class="answer-section">
+                            <textarea id="answerInput" rows="6" placeholder="Type your answer here..."></textarea>
+                            <div class="action-buttons">
+                                <button id="submitAnswer" class="btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Submit Answer & Get Next Question
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="evaluationResult" class="evaluation-container" style="display: none;">
+                        <div class="evaluation-card">
+                            <div class="score-circle">
+                                <div class="score-number" id="questionScore">0</div>
+                                <div class="score-label">Score</div>
+                            </div>
+                            <div class="evaluation-content">
+                                <div class="eval-item feedback">
+                                    <div class="eval-icon"><i class="fas fa-comment-dots"></i></div>
+                                    <div class="eval-text">
+                                        <h4>Feedback</h4>
+                                        <p id="feedbackText"></p>
+                                    </div>
+                                </div>
+                                <div class="eval-grid">
+                                    <div class="eval-item strength">
+                                        <div class="eval-icon"><i class="fas fa-thumbs-up"></i></div>
+                                        <div class="eval-text">
+                                            <h4>Strengths</h4>
+                                            <p id="strengthsText"></p>
+                                        </div>
+                                    </div>
+                                    <div class="eval-item improvement">
+                                        <div class="eval-icon"><i class="fas fa-graduation-cap"></i></div>
+                                        <div class="eval-text">
+                                            <h4>Areas to Improve</h4>
+                                            <p id="improvementsText"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="eval-item suggested">
+                                    <div class="eval-icon"><i class="fas fa-lightbulb"></i></div>
+                                    <div class="eval-text">
+                                        <h4>Suggested Answer</h4>
+                                        <p id="suggestedAnswer"></p>
+                                    </div>
+                                </div>
+                                <div class="eval-grid">
+                                    <div class="eval-item skills">
+                                        <div class="eval-icon"><i class="fas fa-tools"></i></div>
+                                        <div class="eval-text">
+                                            <h4>Skills to Improve</h4>
+                                            <p id="skillsToImprove"></p>
+                                        </div>
+                                    </div>
+                                    <div class="eval-item learning">
+                                        <div class="eval-icon"><i class="fas fa-book"></i></div>
+                                        <div class="eval-text">
+                                            <h4>Learning Topics</h4>
+                                            <p id="learningTopics"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="nextQuestion" class="btn-primary next-btn" style="display: none;">
+                                <i class="fas fa-arrow-right"></i> Next Question
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Section -->
+                <div id="reportSection" class="report-container glass-card" style="display: none;">
+                    <div class="report-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h2>Your Interview Report</h2>
+                    </div>
+                    <div class="overall-score-section">
+                        <div class="overall-score-ring">
+                            <div id="overallScore" class="score-number">0</div>
+                            <div class="score-label">Overall Score</div>
+                        </div>
+                    </div>
+                    <div class="report-content" id="reportText">
+                        <!-- Report content will be dynamically inserted -->
+                    </div>
+                    <div class="report-actions">
+                        <button id="copyReport" class="btn-secondary">
+                            <i class="fas fa-copy"></i> Copy Report
+                        </button>
+                        <button id="downloadPDF" class="btn-primary">
+                            <i class="fas fa-file-pdf"></i> Download Full Report as PDF
+                        </button>
+                        <button id="resetInterview" class="btn-secondary">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page-content" style="display: none;">
+                <div class="dashboard-container glass-card">
+                    <div class="dashboard-header">
+                        <h2><i class="fas fa-chart-line"></i> Interview Dashboard</h2>
+                        <p>Track your interview performance and progress</p>
+                    </div>
+                    <div class="dashboard-stats" id="dashboardStats">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalQuestions">0</h3>
+                                <p>Total Questions</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stat-info">
+                                <h3 id="answeredQuestions">0</h3>
+                                <p>Answered</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-star"></i></div>
+                            <div class="stat-info">
+                                <h3 id="averageScore">0%</h3>
+                                <p>Average Score</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="stat-info">
+                                <h3 id="completionRate">0%</h3>
+                                <p>Completion Rate</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-details" id="dashboardDetails">
+                        <h3>Question History</h3>
+                        <div id="questionHistory">
+                            <p class="no-data">No interview data available. Start an interview to see history.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="profilePage" class="page-content" style="display: none;">
+                <div class="profile-container glass-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <h2 id="profileName">User Profile</h2>
+                        <p id="profileRole">Job Role: Not Set</p>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-section">
+                            <h3><i class="fas fa-info-circle"></i> Personal Information</h3>
+                            <div class="profile-info-grid">
+                                <div class="info-item">
+                                    <label>Full Name</label>
+                                    <p id="profileFullName">Not set</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Job Role</label>
+                                    <p id="profileJobRole">Not set</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Experience Level</label>
+                                    <p id="profileExperience">Not set</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Skills</label>
+                                    <p id="profileSkills">Not set</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-section">
+                            <h3><i class="fas fa-cog"></i> Interview Settings</h3>
+                            <div class="profile-info-grid">
+                                <div class="info-item">
+                                    <label>Interview Type</label>
+                                    <p id="profileInterviewType">Not set</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Difficulty Level</label>
+                                    <p id="profileDifficulty">Not set</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Questions</label>
+                                    <p id="profileQuestions">Not set</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-section">
+                            <h3><i class="fas fa-chart-bar"></i> Performance</h3>
+                            <div class="profile-info-grid">
+                                <div class="info-item">
+                                    <label>Overall Score</label>
+                                    <p id="profileOverallScore">0%</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Questions Answered</label>
+                                    <p id="profileAnswered">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 Vetri AI Interview Coach. Powered by Google Gemini AI</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
