@@ -14,9 +14,7 @@ services:
         value: 10000
       - key: PYTHON_VERSION
         value: 3.11.0
-      - key: OPENAI_API_KEY
-        sync: false
       - key: GEMINI_API_KEY
         sync: false
-      - key: GCP_API_KEY
+      - key: OPENAI_API_KEY
         sync: false
