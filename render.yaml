@@ -2,15 +2,21 @@ services:
   - type: web
     name: vetri-ai-interview-coach
     env: python
+    plan: free
     buildCommand: |
-      python -m venv venv
-      source venv/bin/activate
-      pip install -r backend/requirements.txt
+      cd backend
+      pip install -r requirements.txt
     startCommand: |
-      cd backend && gunicorn wsgi:app
+      cd backend
+      gunicorn app:app
     envVars:
+      - key: PORT
+        value: 10000
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: OPENAI_API_KEY
+        sync: false
       - key: GEMINI_API_KEY
         sync: false
-      - key: PYTHON_VERSION
-        value: 3.9.0
-    plan: free
+      - key: GCP_API_KEY
+        sync: false
